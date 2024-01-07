@@ -10,24 +10,21 @@ app.use(cors({ origin: true, credentials: true }));
 
 const stripe = require('stripe')('sk_test_51OVWQLHOraHpQAo7y2iB6iFZcJHDd7gnpGAE2bfN9wzGGZXzajhJQpS9QbrywBSuax1T3ONksIL3z6F0fk4hMlfD00Q9NJpa2X')
 
+
+app.get('/public/cancel', (req, res) => {
+  res.sendFile('cancel.html', {
+    root: './public'
+  })
+})
+app.get('/public/success', (req, res) => {
+  res.sendFile('success.html', {
+    root: './public'
+  })
+})
+
 app.post('/checkout', async (req, res, next) => {
+
   try {
-    // const session = await stripe.checkout.sessions.create({
-    //   line_items: req.body.items.map((item) => ({
-    //     currency: 'usd',
-    //     product_data: {
-    //       name: item.product.title,
-    //       images: item.product.image
-    //     },
-    //     unit_amount: item.product.price * 100
-    //   })),
-    //   mode: 'payment',
-    //   success_url: 'http://localhost:4242/success.html',
-    //   cancel_url: 'http://localhost:4242/cancel.html',
-    // });
-    // res.status(200).json(session)
-
-
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       shipping_address_collection: {
@@ -89,8 +86,8 @@ app.post('/checkout', async (req, res, next) => {
           quantity: item.quantity,
         })),
          mode: "payment",
-         success_url: "https://ecommerce-express-server-hkqh.onrender.com/public/checkout.html",
-         cancel_url: "https://ecommerce-express-server-hkqh.onrender.com/public/cancel.html",
+         success_url: "https://ecommerce-express-server-hkqh.onrender.com/public/success",
+         cancel_url: "https://ecommerce-express-server-hkqh.onrender.com/public/cancel",
       });
 
       res.status(200).json(session);
@@ -101,4 +98,3 @@ app.post('/checkout', async (req, res, next) => {
 const PORT = process.env.PORT ?? 3000;
 
 app.listen(PORT, () => console.log(`aplicacion is running on ${PORT}`));
-
