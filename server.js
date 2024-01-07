@@ -89,8 +89,8 @@ app.post('/checkout', async (req, res, next) => {
           quantity: item.quantity,
         })),
          mode: "payment",
-         success_url: "./public/checkout.html",
-         cancel_url: "./public/cancel.html",
+         success_url: "https://ecommerce-express-server-hkqh.onrender.com/public/checkout.html",
+         cancel_url: "https://ecommerce-express-server-hkqh.onrender.com/public/cancel.html",
       });
 
       res.status(200).json(session);
