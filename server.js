@@ -98,3 +98,5 @@ app.post('/checkout', async (req, res, next) => {
 const PORT = process.env.PORT ?? 3000;
 
 app.listen(PORT, () => console.log(`aplicacion is running on ${PORT}`));
+
+module.exports = app;
